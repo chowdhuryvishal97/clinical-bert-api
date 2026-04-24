@@ -2,7 +2,7 @@ name: Deploy to AWS ECS
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/api-deploy]
   workflow_dispatch:
 
 permissions:
@@ -35,7 +35,7 @@ jobs:
 
       - name: Build, tag, and push image to ECR
         id: build-image
-        working-directory: clinical-bert-api
+        working-directory: api
         run: |
           IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/${ECR_REPOSITORY}:${GITHUB_SHA}"
           docker build -t "$IMAGE_URI" .
@@ -57,4 +57,3 @@ jobs:
           cluster: ${{ env.ECS_CLUSTER }}
           service: ${{ env.ECS_SERVICE }}
           wait-for-service-stability: true
-

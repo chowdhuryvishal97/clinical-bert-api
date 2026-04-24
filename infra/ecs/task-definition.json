@@ -1,14 +1,14 @@
 {
-  "family": "REPLACE_WITH_TERRAFORM_TASK_FAMILY",
+  "family": "clinical-bert-dev-api",
   "networkMode": "awsvpc",
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "1024",
   "memory": "2048",
-  "executionRoleArn": "REPLACE_WITH_TASK_EXECUTION_ROLE_ARN",
+  "executionRoleArn": "arn:aws:iam::521468491224:role/clinical-bert-dev-ecs-task-exec",
   "containerDefinitions": [
     {
       "name": "api",
-      "image": "REPLACE_WITH_ECR_IMAGE_URI",
+      "image": "521468491224.dkr.ecr.us-east-1.amazonaws.com/clinical-bert-dev-api:latest",
       "essential": true,
       "portMappings": [
         { "containerPort": 8080, "hostPort": 8080, "protocol": "tcp" }
@@ -20,12 +20,11 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "REPLACE_WITH_LOG_GROUP_NAME",
-          "awslogs-region": "REPLACE_WITH_AWS_REGION",
+          "awslogs-group": "/ecs/clinical-bert-dev",
+          "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
       }
     }
   ]
 }
-
