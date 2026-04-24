@@ -1,0 +1,29 @@
+# Source Control
+.git
+.gitignore
+
+# Python caching and temporary files
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints
+
+# Virtual Environments
+.venv/
+env/
+venv/
+ENV/
+.env
+
+# Testing and Quality
+.pytest_cache/
+tests/
+pytest.ini
+.flake8
+.dockerignore
+Dockerfile
+
+# Project files and configuration
+README.md
+requirements-dev.txt
+pyproject.toml

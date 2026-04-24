@@ -5,7 +5,10 @@ __pycache__/
 .Python
 .venv/
 venv/
+ENV/
+env/
 .env
+.flaskenv
 *.egg-info/
 .pytest_cache/
 .mypy_cache/
@@ -14,9 +17,15 @@ venv/
 htmlcov/
 dist/
 build/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
 
 # OS / IDE
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
+*.swp
+*.swo
