@@ -1,0 +1,30 @@
+{
+  "family": "clinical-bert-dev-api",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::521468491224:role/clinical-bert-dev-ecs-task-exec",
+  "containerDefinitions": [
+    {
+      "name": "api",
+      "image": "521468491224.dkr.ecr.us-east-1.amazonaws.com/clinical-bert-dev-api:latest",
+      "essential": true,
+      "portMappings": [
+        { "containerPort": 8080, "hostPort": 8080, "protocol": "tcp" }
+      ],
+      "environment": [
+        { "name": "PORT", "value": "8080" },
+        { "name": "MODEL_DEVICE", "value": "-1" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/clinical-bert-dev",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
