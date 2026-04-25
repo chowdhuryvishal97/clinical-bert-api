@@ -326,7 +326,18 @@ resource "aws_ecs_service" "api" {
 # ----------------------------
 
 locals {
-  github_subject = length(trimspace(var.github_ref_pattern)) > 0 ? var.github_ref_pattern : "repo:${var.github_repo}:ref:refs/heads/main"
+  # GitHub OIDC subject claim is typically:
+  #   repo:OWNER/REPO:ref:refs/heads/<branch>
+  #
+  # Keep the default least-privilege aligned with this repo's workflow triggers
+  # (`main` + `feature/api-deploy`). For other patterns (tags, env protection,
+  # other branches), set `var.github_ref_pattern`.
+  github_subjects = length(trimspace(var.github_ref_pattern)) > 0 ? [
+    var.github_ref_pattern
+  ] : [
+    "repo:${var.github_repo}:ref:refs/heads/main",
+    "repo:${var.github_repo}:ref:refs/heads/feature/api-deploy",
+  ]
 }
 
 resource "aws_iam_role" "github_deploy" {
@@ -342,7 +353,7 @@ resource "aws_iam_role" "github_deploy" {
       Action = "sts:AssumeRoleWithWebIdentity"
       Condition = {
         StringLike = {
-          "token.actions.githubusercontent.com:sub" = local.github_subject
+          "token.actions.githubusercontent.com:sub" = local.github_subjects
         }
         StringEquals = {
           "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"

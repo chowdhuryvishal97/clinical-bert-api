@@ -43,11 +43,12 @@ variable "desired_count" {
 variable "github_repo" {
   type        = string
   description = "GitHub repo in owner/name form used for OIDC trust policy (e.g. org/repo)."
+  default     = "chowdhuryvishal97/clinical-bert-api"
 }
 
 variable "github_ref_pattern" {
   type        = string
-  description = "Allowed GitHub OIDC subject pattern (e.g. repo:org/repo:ref:refs/heads/main)."
+  description = "Allowed GitHub OIDC subject pattern (e.g. repo:org/repo:ref:refs/heads/main or repo:org/repo:ref:refs/heads/*). If empty, Terraform will allow the branches used by the workflow triggers."
   default     = ""
 }
 

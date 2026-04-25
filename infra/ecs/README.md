@@ -8,6 +8,13 @@
 - The workflow injects the new image URI into `task-definition.json` (container `api`).
 - The workflow registers a new task definition revision and updates the ECS service.
 
+## Bootstrap (first deploy)
+
+Terraform creates an ECS service that initially references the image tag `:initial` in ECR. Before the service can come up cleanly the first time, make sure **an image exists in ECR** with that tag, either by:
+
+- Running the GitHub Actions deploy workflow once (after configuring required secrets/vars), or
+- Manually building and pushing an `initial` image (see `infra/terraform/README.md` for commands).
+
 ## One-time setup
 
 Update `task-definition.json` placeholders:
